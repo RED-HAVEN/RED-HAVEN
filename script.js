@@ -332,9 +332,9 @@
           },
           { threshold: 0.1 }
         );
-        $('.owner-card', list).forEach((c) => obs.observe(c));
+        $$('.owner-card', list).forEach((c) => obs.observe(c));
       } else {
-        $('.owner-card', list).forEach((c) => c.classList.add('in-view'));
+        $$('.owner-card', list).forEach((c) => c.classList.add('in-view'));
       }
     } catch (error) {
       const status = $('#owners-status');

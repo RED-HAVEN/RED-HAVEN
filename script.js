@@ -351,6 +351,83 @@
   loadOwners();
 
   /* ============================================================
+     LOAD HIGH STAFF
+     ============================================================ */
+  async function loadHighStaff() {
+    const list = $('#high-staff-list');
+    if (!list) return;
+
+    try {
+      const res = await fetch(`./staff.json?v=${Date.now()}`, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+      });
+      if (!res.ok) throw new Error(`High Staff endpoint ${res.status}`);
+
+      const data = await res.json();
+      const staff = Array.isArray(data.staff) ? data.staff : [];
+      list.replaceChildren();
+
+      if (!staff.length) {
+        const empty = document.createElement('div');
+        empty.className = 'owners-placeholder';
+        empty.textContent = 'لم يتم العثور على أعضاء بهذه الرتبة.';
+        list.append(empty);
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      for (const member of staff) {
+        const card = document.createElement('article');
+        card.className = 'owner-card reveal';
+
+        const avatar = document.createElement('img');
+        avatar.src = member.avatar;
+        avatar.alt = '';
+        avatar.loading = 'lazy';
+        avatar.width = 48;
+        avatar.height = 48;
+
+        const info = document.createElement('div');
+        const name = document.createElement('strong');
+        name.textContent = member.name;
+        const badge = document.createElement('small');
+        badge.textContent = 'HIGH STAFF';
+
+        info.append(name, badge);
+        card.append(avatar, info);
+        frag.append(card);
+      }
+      list.append(frag);
+
+      if ('IntersectionObserver' in window && !prefersReduced()) {
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        $('.owner-card', list).forEach((card) => obs.observe(card));
+      } else {
+        $('.owner-card', list).forEach((card) => card.classList.add('in-view'));
+      }
+    } catch {
+      list.replaceChildren();
+      const message = document.createElement('div');
+      message.className = 'owners-placeholder';
+      message.textContent = 'تعذّر تحميل قائمة High Staff الآن.';
+      list.append(message);
+    }
+  }
+
+  loadHighStaff();
+
+  /* ============================================================
      LOAD SERVER BOOSTERS
      ============================================================ */
   async function loadBoosters() {

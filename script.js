@@ -235,12 +235,22 @@
       }
       const joinsEl = $('#invite-joins');
       if (joinsEl) {
-        joinsEl.textContent = Number.isFinite(invite.uses)
-          ? formatCount(invite.uses)
-          : 'غير متاح';
+        try {
+          const statsRes = await fetch(`./invite-stats.json?v=${Date.now()}`, {
+            headers: { Accept: 'application/json' },
+            cache: 'no-store',
+          });
+          if (!statsRes.ok) throw new Error(`Invite stats ${statsRes.status}`);
+          const inviteStats = await statsRes.json();
+          joinsEl.textContent = Number.isInteger(inviteStats.uses)
+            ? formatCount(inviteStats.uses)
+            : 'غير متاح';
+        } catch {
+          joinsEl.textContent = 'غير متاح';
+        }
       }
       if (status) {
-        status.textContent = 'الأعضاء والمتصلون أعداد تقريبية من Discord وتُحدّث كل 5 دقائق.';
+        status.textContent = 'الأعضاء والمتصلون أعداد تقريبية من Discord وتُحدّث كل 5 دقائق؛ استخدامات الدعوة تتحدّث كل 15 دقيقة.';
       }
     } catch (error) {
       const m = $('#member-count');

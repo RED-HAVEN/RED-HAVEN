@@ -2,11 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b080a" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0a0709" />
   <meta name="description" content="Red Haven — مجتمع ألعاب يجمع اللاعبين واللاعبات، جلسات لعب جماعية وفعاليات وهدايا Steam." />
-  <meta name="referrer" content="no-referrer" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://cdn.discordapp.com data:; connect-src 'self' https://discord.com https://fonts.googleapis.com https://fonts.gstatic.com; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests" />
   <title>Red Haven — مجتمع اللاعبين</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,53 +12,211 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="grain"></div>
+  <div class="grain" aria-hidden="true"></div>
+
   <header class="site-header">
-    <a class="brand" href="#home" aria-label="Red Haven الرئيسية"><img src="red-haven-logo.webp" alt="شعار Red Haven" /><span>RED <b>HAVEN</b></span></a>
-    <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false"><i></i><i></i><i></i></button>
-    <nav class="nav" aria-label="القائمة الرئيسية"><a href="#home" class="active">الرئيسية</a><a href="#community">المجتمع</a><a href="#owners">المالكون</a><a href="#games">الألعاب</a><a href="#giveaways">الهدايا</a><a href="#join">انضم إلينا</a></nav>
-    <a class="header-join" href="#join"><span>انضم للسيرفر</span><b>↙</b></a>
+    <a class="brand" href="#home" aria-label="Red Haven الرئيسية">
+      <img src="red-haven-logo.webp" alt="شعار Red Haven" width="48" height="48" />
+      <span>RED <b>HAVEN</b></span>
+    </a>
+    <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false">
+      <i></i><i></i><i></i>
+    </button>
+    <nav class="nav" aria-label="القائمة الرئيسية">
+      <a href="#home" class="active">الرئيسية</a>
+      <a href="#community">المجتمع</a>
+      <a href="#owners">المالكون</a>
+      <a href="#games">الألعاب</a>
+      <a href="#giveaways">الهدايا</a>
+      <a href="#join">انضم إلينا</a>
+    </nav>
+    <a class="header-join" href="#join">
+      <span>انضم للسيرفر</span><b>↙</b>
+    </a>
   </header>
+
   <main>
+    <!-- Hero -->
     <section class="hero" id="home">
-      <div class="hero-bg"></div><div class="hero-content">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-content">
         <div class="live-label"><span></span> مجتمع ألعاب • مفتوح للجميع</div>
         <h1>مكانك بيننا<br /><em>في <span>Red Haven</span></em></h1>
         <p>كوّن فريقك، اكتشف ألعاباً جديدة، وشارك لحظات الفوز والضحك. مجتمع واحد يجمع اللاعبين واللاعبات من كل مكان.</p>
-        <div class="hero-actions"><a class="button button-red" href="#join">انضم إلى الكوميونيتي <b>←</b></a><a class="button button-outline" href="#games">اكتشف الألعاب <b>⌄</b></a></div>
-        <div class="hero-meta"><span class="pulse"></span><span>الجميع مرحّب بهم</span><i></i><span>نلعبها سوا</span></div>
+        <div class="hero-actions">
+          <a class="button button-red" href="#join">انضم إلى الكوميونيتي <b>←</b></a>
+          <a class="button button-outline" href="#games">اكتشف الألعاب <b>⌄</b></a>
+        </div>
+        <div class="hero-meta">
+          <span class="pulse"></span><span>الجميع مرحّب بهم</span><i></i><span>نلعبها سوا</span>
+        </div>
       </div>
-      <div class="hero-emblem"><div class="emblem-halo"></div><img src="red-haven-logo.webp" alt="Red Haven — مجتمع الألعاب" /><div class="emblem-tag">ONE COMMUNITY <span>·</span> ENDLESS ADVENTURES</div></div>
+      <div class="hero-emblem">
+        <div class="emblem-halo" aria-hidden="true"></div>
+        <img src="red-haven-logo.webp" alt="Red Haven — مجتمع الألعاب" width="420" height="420" loading="eager" />
+        <div class="emblem-tag">ONE COMMUNITY <span>·</span> ENDLESS ADVENTURES</div>
+      </div>
       <a class="scroll-cue" href="#community">مرّر لاكتشاف المجتمع <b>↓</b></a>
     </section>
 
+    <!-- إحصائيات السيرفر -->
     <section class="server-stats" aria-label="إحصائيات السيرفر">
-      <article class="server-stat"><span class="stat-symbol">♟</span><div><strong id="member-count">—</strong><small>عضو في السيرفر</small></div></article>
-      <article class="server-stat"><span class="stat-symbol">●</span><div><strong id="online-count">—</strong><small>متصل الآن</small></div></article>
-      <article class="server-stat invite-stat"><span class="stat-symbol">↗</span><div><strong id="invite-joins">جارٍ التحقق</strong><small>استخدامات رابط الدعوة</small></div><span class="stat-hint" title="يعرض العدد إذا أتاحه Discord للدعوة. قد يتطلب إحصاء الاستخدامات صلاحية إدارة السيرفر.">ⓘ</span></article>
+      <article class="server-stat">
+        <span class="stat-symbol" aria-hidden="true">♟</span>
+        <div><strong id="member-count">—</strong><small>عضو في السيرفر</small></div>
+      </article>
+      <article class="server-stat">
+        <span class="stat-symbol" aria-hidden="true">●</span>
+        <div><strong id="online-count">—</strong><small>متصل الآن</small></div>
+      </article>
+      <article class="server-stat invite-stat">
+        <span class="stat-symbol" aria-hidden="true">↗</span>
+        <div><strong id="invite-joins">جارٍ التحقق</strong><small>استخدامات رابط الدعوة</small></div>
+        <span class="stat-hint" title="يعرض العدد إذا أتاحه Discord للدعوة.">ⓘ</span>
+      </article>
       <p class="stats-caption" id="stats-status" aria-live="polite">إحصائيات تقريبية من Discord وتتحدث تلقائياً.</p>
     </section>
 
-    <section class="owners section" id="owners"><div class="section-title"><span class="eyebrow">فريق الإدارة</span><h2>أصحاب <span>Red Haven</span></h2><p>أعضاء السيرفر الحاملون لرتبة OWNERS.</p></div><div class="owners-grid" id="owners-list" aria-live="polite"><div class="owners-placeholder" id="owners-status">سيظهر المالكون هنا بعد ربط خدمة Discord الآمنة.</div></div><p class="owners-note">الأسماء والصور المعروضة مأخوذة من ملفات Discord العامة للأعضاء ضمن هذه الرتبة.</p></section>
+    <!-- المالكون -->
+    <section class="owners section" id="owners">
+      <div class="section-title">
+        <span class="eyebrow">فريق الإدارة</span>
+        <h2>أصحاب <span>Red Haven</span></h2>
+        <p>أعضاء السيرفر الحاملون لرتبة OWNERS.</p>
+      </div>
+      <div class="owners-grid" id="owners-list" aria-live="polite">
+        <div class="owners-placeholder" id="owners-status">سيظهر المالكون هنا بعد ربط خدمة Discord الآمنة.</div>
+      </div>
+      <p class="owners-note">الأسماء والصور المعروضة مأخوذة من ملفات Discord العامة للأعضاء ضمن هذه الرتبة.</p>
+    </section>
 
-    <section class="intro section" id="community"><div class="section-title"><span class="eyebrow">أكثر من مجرد سيرفر</span><h2>هنا تبدأ <span>الحكاية</span></h2><p>سيرفرك للعب الجماعي، التعارف، والفعاليات الممتعة — أياً كانت لعبتك أو خبرتك.</p></div><div class="feature-grid">
-      <article class="feature-card"><div class="feature-icon">♧</div><span class="card-index">01 / COMMUNITY</span><h3>كوميونيتي للجميع</h3><p>مساحة ودّية ومحترمة للاعبين واللاعبات. تعرّف على أشخاص يشاركونك نفس الشغف.</p><div class="card-mark">RH</div></article>
-      <article class="feature-card"><div class="feature-icon">⌁</div><span class="card-index">02 / TEAM UP</span><h3>العب مع فريقك</h3><p>كوّن فريقاً، ابحث عن لاعبين لجولتك القادمة، واستمتعوا باللعب سوا.</p><div class="card-mark">RH</div></article>
-      <article class="feature-card"><div class="feature-icon">✦</div><span class="card-index">03 / EVENTS</span><h3>فعاليات وهدايا</h3><p>تابع فعاليات المجتمع وسحوبات الهدايا، ومنها هدايا Steam وفق شروط كل فعالية.</p><div class="card-mark">RH</div></article>
-    </div></section>
+    <!-- المجتمع -->
+    <section class="intro section" id="community">
+      <div class="section-title">
+        <span class="eyebrow">أكثر من مجرد سيرفر</span>
+        <h2>هنا تبدأ <span>الحكاية</span></h2>
+        <p>سيرفرك للعب الجماعي، التعارف، والفعاليات الممتعة — أياً كانت لعبتك أو خبرتك.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">♧</div>
+          <span class="card-index">01 / COMMUNITY</span>
+          <h3>كوميونيتي للجميع</h3>
+          <p>مساحة ودّية ومحترمة للاعبين واللاعبات. تعرّف على أشخاص يشاركونك نفس الشغف.</p>
+          <div class="card-mark" aria-hidden="true">RH</div>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">⌁</div>
+          <span class="card-index">02 / TEAM UP</span>
+          <h3>العب مع فريقك</h3>
+          <p>كوّن فريقاً، ابحث عن لاعبين لجولتك القادمة، واستمتعوا باللعب سوا.</p>
+          <div class="card-mark" aria-hidden="true">RH</div>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon" aria-hidden="true">✦</div>
+          <span class="card-index">03 / EVENTS</span>
+          <h3>فعاليات وهدايا</h3>
+          <p>تابع فعاليات المجتمع وسحوبات الهدايا، ومنها هدايا Steam وفق شروط كل فعالية.</p>
+          <div class="card-mark" aria-hidden="true">RH</div>
+        </article>
+      </div>
+    </section>
 
-    <section class="games section" id="games"><div class="section-title"><span class="eyebrow">جهّز فريقك</span><h2>أي لعبة، <span>نلعبها سوا</span></h2><p>من المنافسات الحماسية إلى جلسات اللعب الهادية — مكانك محفوظ.</p></div><div class="game-grid">
-      <article class="game-card game-fps"><div class="game-number">01</div><div class="game-info"><span>تصويب وتنافس</span><h3>FPS & BATTLE ROYALE</h3><p>Valorant · Fortnite · PUBG · Call of Duty · Apex Legends</p></div><span class="game-arrow">↙</span></article>
-      <article class="game-card game-survival"><div class="game-number">02</div><div class="game-info"><span>مغامرة وبقاء</span><h3>SURVIVAL & ADVENTURE</h3><p>Minecraft · Rust · Roblox · ARK · GTA V</p></div><span class="game-arrow">↙</span></article>
-      <article class="game-card game-party"><div class="game-number">03</div><div class="game-info"><span>جلسات وضحك</span><h3>PARTY & CO-OP</h3><p>Among Us · Lethal Company · Phasmophobia · Party games</p></div><span class="game-arrow">↙</span></article>
-      <article class="game-card game-more"><div class="game-number">04</div><div class="game-info"><span>وغيرها كثير</span><h3>YOUR GAME, YOUR CREW</h3><p>اقترح لعبتك وابحث عن لاعبين يشاركونك الحماس.</p></div><span class="game-arrow">↙</span></article>
-    </div></section>
+    <!-- الألعاب -->
+    <section class="games section" id="games">
+      <div class="section-title">
+        <span class="eyebrow">جهّز فريقك</span>
+        <h2>أي لعبة، <span>نلعبها سوا</span></h2>
+        <p>من المنافسات الحماسية إلى جلسات اللعب الهادية — مكانك محفوظ.</p>
+      </div>
+      <div class="game-grid">
+        <article class="game-card">
+          <div class="game-number">01</div>
+          <div class="game-info">
+            <span>تصويب وتنافس</span>
+            <h3>FPS &amp; BATTLE ROYALE</h3>
+            <p>Valorant · Fortnite · PUBG · Call of Duty · Apex Legends</p>
+          </div>
+          <span class="game-arrow" aria-hidden="true">↙</span>
+        </article>
+        <article class="game-card">
+          <div class="game-number">02</div>
+          <div class="game-info">
+            <span>مغامرة وبقاء</span>
+            <h3>SURVIVAL &amp; ADVENTURE</h3>
+            <p>Minecraft · Rust · Roblox · ARK · GTA V</p>
+          </div>
+          <span class="game-arrow" aria-hidden="true">↙</span>
+        </article>
+        <article class="game-card">
+          <div class="game-number">03</div>
+          <div class="game-info">
+            <span>جلسات وضحك</span>
+            <h3>PARTY &amp; CO-OP</h3>
+            <p>Among Us · Lethal Company · Phasmophobia · Party games</p>
+          </div>
+          <span class="game-arrow" aria-hidden="true">↙</span>
+        </article>
+        <article class="game-card">
+          <div class="game-number">04</div>
+          <div class="game-info">
+            <span>وغيرها كثير</span>
+            <h3>YOUR GAME, YOUR CREW</h3>
+            <p>اقترح لعبتك وابحث عن لاعبين يشاركونك الحماس.</p>
+          </div>
+          <span class="game-arrow" aria-hidden="true">↙</span>
+        </article>
+      </div>
+    </section>
 
-    <section class="giveaway section" id="giveaways"><div class="giveaway-art"><div class="gift-orbit orbit-one"></div><div class="gift-orbit orbit-two"></div><div class="gift-box">🎁</div><span class="spark spark-one">✦</span><span class="spark spark-two">✧</span></div><div class="giveaway-copy"><span class="eyebrow">مفاجآت المجتمع</span><h2>هدايا <span>Steam</span><br />في الفعاليات</h2><p>نقيم سحوبات وفعاليات مجتمعية تتضمن هدايا Steam. تابع إعلانات السيرفر لمعرفة الجوائز المتاحة وشروط المشاركة وموعد كل فعالية.</p><div class="honest-note"><b>✦</b><span>الهدايا تُعلن عند توفرها. لا نطلب كلمة مرور Steam أو بيانات الدفع للمشاركة.</span></div><a class="button button-red" href="#join">تابع الفعاليات <b>↗</b></a></div></section>
+    <!-- الهدايا -->
+    <section class="giveaway section" id="giveaways">
+      <div class="giveaway-art">
+        <div class="gift-orbit orbit-one" aria-hidden="true"></div>
+        <div class="gift-orbit orbit-two" aria-hidden="true"></div>
+        <div class="gift-box" aria-hidden="true">🎁</div>
+        <span class="spark spark-one" aria-hidden="true">✦</span>
+        <span class="spark spark-two" aria-hidden="true">✧</span>
+      </div>
+      <div class="giveaway-copy">
+        <span class="eyebrow">مفاجآت المجتمع</span>
+        <h2>هدايا <span>Steam</span><br />في الفعاليات</h2>
+        <p>نقيم سحوبات وفعاليات مجتمعية تتضمن هدايا Steam. تابع إعلانات السيرفر لمعرفة الجوائز المتاحة وشروط المشاركة وموعد كل فعالية.</p>
+        <div class="honest-note">
+          <b aria-hidden="true">✦</b>
+          <span>الهدايا تُعلن عند توفرها. لا نطلب كلمة مرور Steam أو بيانات الدفع للمشاركة.</span>
+        </div>
+        <a class="button button-red" href="#join">تابع الفعاليات <b>↗</b></a>
+      </div>
+    </section>
 
-    <section class="join section" id="join"><div class="join-panel"><div class="join-top"><span class="eyebrow">مكانك جاهز</span><h2>نقصنا <span>أنت!</span></h2><p>سواء كنت تلعب يومياً أو تبحث عن ناس تلعب معهم من وقت لآخر، حياك في Red Haven.</p><a class="button button-red button-large" href="https://discord.gg/aGHnszRcfu" target="_blank" rel="noreferrer">انضم إلى سيرفر Discord <b>↗</b></a></div><div class="join-steps"><div><b>01</b><span><strong>ادخل السيرفر</strong><small>انضم عبر رابط Discord.</small></span></div><div><b>02</b><span><strong>عرّفنا عليك</strong><small>اختر ألعابك وقنواتك المفضلة.</small></span></div><div><b>03</b><span><strong>ابدأ اللعب</strong><small>كوّن فريقك وشارك الفعاليات.</small></span></div></div></div></section>
+    <!-- الانضمام -->
+    <section class="join section" id="join">
+      <div class="join-panel">
+        <div class="join-top">
+          <span class="eyebrow">مكانك جاهز</span>
+          <h2>نقصنا <span>أنت!</span></h2>
+          <p>سواء كنت تلعب يومياً أو تبحث عن ناس تلعب معهم من وقت لآخر، حياك في Red Haven.</p>
+          <a class="button button-red button-large" href="https://discord.gg/aGHnszRcfu" target="_blank" rel="noreferrer">انضم إلى سيرفر Discord <b>↗</b></a>
+        </div>
+        <div class="join-steps">
+          <div><b>01</b><span><strong>ادخل السيرفر</strong><small>انضم عبر رابط Discord.</small></span></div>
+          <div><b>02</b><span><strong>عرّفنا عليك</strong><small>اختر ألعابك وقنواتك المفضلة.</small></span></div>
+          <div><b>03</b><span><strong>ابدأ اللعب</strong><small>كوّن فريقك وشارك الفعاليات.</small></span></div>
+        </div>
+      </div>
+    </section>
   </main>
-  <footer><a class="brand footer-brand" href="#home"><img src="red-haven-logo.webp" alt="" /><span>RED <b>HAVEN</b></span></a><p>مجتمع واحد، مغامرات لا تنتهي <span>© 2026 RED HAVEN</span></p><a href="#home" class="back-top" aria-label="العودة للأعلى">↑</a></footer>
+
+  <footer>
+    <a class="brand footer-brand" href="#home">
+      <img src="red-haven-logo.webp" alt="" width="36" height="36" loading="lazy" />
+      <span>RED <b>HAVEN</b></span>
+    </a>
+    <p>مجتمع واحد، مغامرات لا تنتهي <span>© 2026 RED HAVEN</span></p>
+    <a href="#home" class="back-top" aria-label="العودة للأعلى">↑</a>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>

@@ -332,9 +332,9 @@
           },
           { threshold: 0.1 }
         );
-        $$('.owner-card', list).forEach((c) => obs.observe(c));
+        $$$('.owner-card', list).forEach((c) => obs.observe(c));
       } else {
-        $$('.owner-card', list).forEach((c) => c.classList.add('in-view'));
+        $$$('.owner-card', list).forEach((c) => c.classList.add('in-view'));
       }
     } catch (error) {
       const status = $('#owners-status');
@@ -412,9 +412,9 @@
           },
           { threshold: 0.1 }
         );
-        $('.owner-card', list).forEach((card) => obs.observe(card));
+        $$('.owner-card', list).forEach((card) => obs.observe(card));
       } else {
-        $('.owner-card', list).forEach((card) => card.classList.add('in-view'));
+        $$('.owner-card', list).forEach((card) => card.classList.add('in-view'));
       }
     } catch {
       list.replaceChildren();

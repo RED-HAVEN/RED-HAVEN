@@ -7,7 +7,7 @@ on:
       - .github/workflows/refresh-owners.yml
       - scripts/update-owners.mjs
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/5 * * * *'
 
 concurrency:
   group: refresh-discord-owners

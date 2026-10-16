@@ -1,3 +1,39 @@
 {
-  "staff": []
+  "staff": [
+    {
+      "id": "1292243740919988265",
+      "name": "!          𝐒 𝐏 𝐄 𝐄 𝐃",
+      "avatar": "https://cdn.discordapp.com/avatars/1292243740919988265/8bac797e14c92a3cbaab7efbcaab4f1b.png?size=128"
+    },
+    {
+      "id": "1177848284547649636",
+      "name": "2ᴘᴀᴄ ᴄᴏʀʟᴇᴏɴᴇ",
+      "avatar": "https://cdn.discordapp.com/avatars/1177848284547649636/2086d94589463f540fe6d66b353363ce.png?size=128"
+    },
+    {
+      "id": "1349779520055541802",
+      "name": "𝑯𝑨𝑩𝑰𝑩",
+      "avatar": "https://cdn.discordapp.com/avatars/1349779520055541802/d0cc117c67fa9c0c543c0385a092a09c.png?size=128"
+    },
+    {
+      "id": "1124542479283269672",
+      "name": "walid bn🫧",
+      "avatar": "https://cdn.discordapp.com/avatars/1124542479283269672/1661ca03dedbb3a25c87866b6a49bcda.png?size=128"
+    },
+    {
+      "id": "1214973544585494548",
+      "name": "𝐘𝐮𝐯𝐚",
+      "avatar": "https://cdn.discordapp.com/avatars/1214973544585494548/56638cc2fa2004a26d451b1807a17dd0.png?size=128"
+    },
+    {
+      "id": "1109288921252249600",
+      "name": "Ꮮ7Ꭿ Ꭻ   ᎿᏔᎯ ᎿᎥ",
+      "avatar": "https://cdn.discordapp.com/avatars/1109288921252249600/433e549282e7cf3f00ceb2db88936c18.png?size=128"
+    },
+    {
+      "id": "1050909805541339136",
+      "name": "ᘏᘏ𝟳",
+      "avatar": "https://cdn.discordapp.com/avatars/1050909805541339136/e10795d66bfa72c2463fdd40412cc608.png?size=128"
+    }
+  ]
 }

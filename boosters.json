@@ -1,4 +1,11 @@
 {
-  "totalBoosts": null,
-  "boosters": []
+  "totalBoosts": 2,
+  "boosters": [
+    {
+      "id": "1261765647897985026",
+      "name": "ÑØŰFƏŁ",
+      "avatar": "https://cdn.discordapp.com/avatars/1261765647897985026/f7b305f05dc58df0785ad87be7bcf67b.png?size=128",
+      "premiumSince": "2026-09-20T02:52:00.381000+00:00"
+    }
+  ]
 }

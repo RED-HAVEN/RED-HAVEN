@@ -1104,6 +1104,10 @@ h1 .line:last-child {
   font-weight: 600;
 }
 
+.high-staff {
+  padding-top: 56px;
+}
+
 .boosters {
   padding-top: 56px;
 }

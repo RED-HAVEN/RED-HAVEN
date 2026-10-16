@@ -3,6 +3,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 const inviteCode = 'aGHnszRcfu';
 const roleId = '1547031412547260427';
 const boosterRoleId = '1551063352267112649';
+// Refresh the public supporters data alongside the owners list.
 const token = process.env.DISCORD_BOT_TOKEN;
 
 if (!token) throw new Error('Missing DISCORD_BOT_TOKEN repository secret.');

@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const inviteCode = 'aGHnszRcfu';
 const roleId = '1547031412547260427';
+const boosterRoleId = '1551063352267112649';
 const token = process.env.DISCORD_BOT_TOKEN;
 
 if (!token) throw new Error('Missing DISCORD_BOT_TOKEN repository secret.');
@@ -30,6 +31,11 @@ try { currentInviteStats = await readFile(inviteStatsPath, 'utf8'); } catch {}
 if (currentInviteStats !== inviteStats) await writeFile(inviteStatsPath, inviteStats, 'utf8');
 
 const owners = [];
+const boosters = [];
+const guild = await discordJson(
+  `https://discord.com/api/v10/guilds/${guildId}?with_counts=true`,
+  { Authorization: `Bot ${token}` }
+);
 let after = '0';
 for (let page = 0; page < 100; page += 1) {
   const url = new URL(`https://discord.com/api/v10/guilds/${guildId}/members`);
@@ -39,7 +45,10 @@ for (let page = 0; page < 100; page += 1) {
   if (!Array.isArray(members)) throw new Error('Unexpected response while reading Discord members.');
 
   for (const member of members) {
-    if (!member.roles?.includes(roleId) || !member.user) continue;
+    if (!member.user) continue;
+    const isOwner = member.roles?.includes(roleId);
+    const isBooster = member.roles?.includes(boosterRoleId);
+    if (!isOwner && !isBooster) continue;
     const user = member.user;
     let avatar;
     if (user.avatar) {
@@ -51,7 +60,9 @@ for (let page = 0; page < 100; page += 1) {
         : Number((BigInt(user.id) >> 22n) % 6n);
       avatar = `https://cdn.discordapp.com/embed/avatars/${index}.png`;
     }
-    owners.push({ id: user.id, name: member.nick || user.global_name || user.username, avatar });
+    const name = member.nick || user.global_name || user.username;
+    if (isOwner) owners.push({ id: user.id, name, avatar });
+    if (isBooster) boosters.push({ id: user.id, name, avatar, premiumSince: member.premium_since || null });
   }
 
   if (members.length < 1000) break;
@@ -65,4 +76,17 @@ const next = `${JSON.stringify({ owners }, null, 2)}\n`;
 let current = '';
 try { current = await readFile(outputPath, 'utf8'); } catch {}
 if (current !== next) await writeFile(outputPath, next, 'utf8');
-console.log(`Owners list refreshed (${owners.length} matching members).`);
+
+boosters.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+const boostersPath = new URL('../boosters.json', import.meta.url);
+const boostData = {
+  totalBoosts: Number.isInteger(guild.premium_subscription_count)
+    ? guild.premium_subscription_count
+    : null,
+  boosters,
+};
+const nextBoosters = `${JSON.stringify(boostData, null, 2)}\n`;
+let currentBoosters = '';
+try { currentBoosters = await readFile(boostersPath, 'utf8'); } catch {}
+if (currentBoosters !== nextBoosters) await writeFile(boostersPath, nextBoosters, 'utf8');
+console.log(`Owners list refreshed (${owners.length}); boosters list refreshed (${boosters.length}).`);

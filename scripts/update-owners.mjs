@@ -17,7 +17,7 @@ const invite = await discordJson(
   { Authorization: `Bot ${token}` }
 );
 const inviteStatsPath = new URL('../invite-stats.json', import.meta.url);
-const inviteStats = `${JSON.stringify({ uses: Number.isInteger(invite.uses) ? invite.uses : null }, null, 2)}\\n`;
+const inviteStats = `${JSON.stringify({ uses: Number.isInteger(invite.uses) ? invite.uses : null }, null, 2)}\n`;
 let currentInviteStats = '';
 try { currentInviteStats = await readFile(inviteStatsPath, 'utf8'); } catch {}
 if (currentInviteStats !== inviteStats) await writeFile(inviteStatsPath, inviteStats, 'utf8');

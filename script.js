@@ -349,4 +349,84 @@
   }
 
   loadOwners();
+
+  /* ============================================================
+     LOAD SERVER BOOSTERS
+     ============================================================ */
+  async function loadBoosters() {
+    const list = $('#boosters-list');
+    if (!list) return;
+
+    try {
+      const res = await fetch(`./boosters.json?v=${Date.now()}`, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+      });
+      if (!res.ok) throw new Error(`Boosters endpoint ${res.status}`);
+
+      const data = await res.json();
+      const boosters = Array.isArray(data.boosters)
+        ? data.boosters.filter((booster) => (
+            typeof booster?.name === 'string' &&
+            typeof booster?.avatar === 'string'
+          ))
+        : [];
+
+      $('#booster-count').textContent = formatCount(boosters.length);
+      $('#total-boosts').textContent = Number.isInteger(data.totalBoosts)
+        ? formatCount(data.totalBoosts)
+        : '—';
+      list.replaceChildren();
+
+      if (!boosters.length) {
+        const empty = document.createElement('div');
+        empty.className = 'owners-placeholder';
+        empty.textContent = 'لا يوجد أعضاء حاليًا برتبة Server Booster.';
+        list.append(empty);
+        return;
+      }
+
+      const frag = document.createDocumentFragment();
+      for (const booster of boosters) {
+        const card = document.createElement('article');
+        card.className = 'owner-card booster-card';
+
+        const avatar = document.createElement('img');
+        const safeAvatar = /^https:\/\/cdn\.discordapp\.com\/(?:avatars\/\d+\/[A-Za-z0-9_]+\.(?:png|gif)|embed\/avatars\/\d+)\?size=\d+$/.test(booster.avatar);
+        avatar.src = safeAvatar
+          ? booster.avatar
+          : 'https://cdn.discordapp.com/embed/avatars/0.png';
+        avatar.alt = '';
+        avatar.loading = 'lazy';
+        avatar.width = 48;
+        avatar.height = 48;
+        avatar.referrerPolicy = 'no-referrer';
+
+        const info = document.createElement('div');
+        const name = document.createElement('strong');
+        name.textContent = booster.name;
+        const badge = document.createElement('small');
+        badge.textContent = 'SERVER BOOSTER';
+        const since = document.createElement('small');
+        since.className = 'booster-since';
+        const sinceDate = booster.premiumSince ? new Date(booster.premiumSince) : null;
+        since.textContent = sinceDate && !Number.isNaN(sinceDate.getTime())
+          ? `داعم منذ ${new Intl.DateTimeFormat('ar', { year: 'numeric', month: 'long' }).format(sinceDate)}`
+          : 'يدعم السيرفر';
+
+        info.append(name, badge, since);
+        card.append(avatar, info);
+        frag.append(card);
+      }
+      list.append(frag);
+    } catch (error) {
+      list.replaceChildren();
+      const message = document.createElement('div');
+      message.className = 'owners-placeholder';
+      message.textContent = 'تعذّر تحميل قائمة الداعمين الآن.';
+      list.append(message);
+    }
+  }
+
+  loadBoosters();
 })();

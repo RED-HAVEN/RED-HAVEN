@@ -2,6 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const inviteCode = 'aGHnszRcfu';
 const roleId = '1547031412547260427';
+const highStaffRoleId = '1547617967267905616';
 const boosterRoleId = '1551063352267112649';
 // Refresh the public supporters data alongside the owners list.
 const token = process.env.DISCORD_BOT_TOKEN;
@@ -32,6 +33,7 @@ try { currentInviteStats = await readFile(inviteStatsPath, 'utf8'); } catch {}
 if (currentInviteStats !== inviteStats) await writeFile(inviteStatsPath, inviteStats, 'utf8');
 
 const owners = [];
+const highStaff = [];
 const boosters = [];
 const guild = await discordJson(
   `https://discord.com/api/v10/guilds/${guildId}?with_counts=true`,
@@ -48,8 +50,9 @@ for (let page = 0; page < 100; page += 1) {
   for (const member of members) {
     if (!member.user) continue;
     const isOwner = member.roles?.includes(roleId);
+    const isHighStaff = member.roles?.includes(highStaffRoleId);
     const isBooster = member.roles?.includes(boosterRoleId);
-    if (!isOwner && !isBooster) continue;
+    if (!isOwner && !isHighStaff && !isBooster) continue;
     const user = member.user;
     let avatar;
     if (user.avatar) {
@@ -63,6 +66,7 @@ for (let page = 0; page < 100; page += 1) {
     }
     const name = member.nick || user.global_name || user.username;
     if (isOwner) owners.push({ id: user.id, name, avatar });
+    if (isHighStaff) highStaff.push({ id: user.id, name, avatar });
     if (isBooster) boosters.push({ id: user.id, name, avatar, premiumSince: member.premium_since || null });
   }
 
@@ -78,6 +82,13 @@ let current = '';
 try { current = await readFile(outputPath, 'utf8'); } catch {}
 if (current !== next) await writeFile(outputPath, next, 'utf8');
 
+highStaff.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
+const staffPath = new URL('../staff.json', import.meta.url);
+const nextStaff = `${JSON.stringify({ staff: highStaff }, null, 2)}\n`;
+let currentStaff = '';
+try { currentStaff = await readFile(staffPath, 'utf8'); } catch {}
+if (currentStaff !== nextStaff) await writeFile(staffPath, nextStaff, 'utf8');
+
 boosters.sort((a, b) => a.name.localeCompare(b.name, 'ar'));
 const boostersPath = new URL('../boosters.json', import.meta.url);
 const boostData = {
@@ -90,4 +101,4 @@ const nextBoosters = `${JSON.stringify(boostData, null, 2)}\n`;
 let currentBoosters = '';
 try { currentBoosters = await readFile(boostersPath, 'utf8'); } catch {}
 if (currentBoosters !== nextBoosters) await writeFile(boostersPath, nextBoosters, 'utf8');
-console.log(`Owners list refreshed (${owners.length}); boosters list refreshed (${boosters.length}).`);
+console.log(`Owners list refreshed (${owners.length}); High Staff list refreshed (${highStaff.length}); boosters list refreshed (${boosters.length}).`);

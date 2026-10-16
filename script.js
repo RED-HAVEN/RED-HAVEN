@@ -41,9 +41,12 @@ async function loadOwners(){
     list.replaceChildren();
     if(!owners.length){list.innerHTML='<div class="owners-placeholder">لم يتم العثور على أعضاء بهذه الرتبة.</div>';return}
     for(const owner of owners){
+      if(typeof owner.name!=='string'||typeof owner.avatar!=='string')continue;
       const card=document.createElement('article');card.className='owner-card';
-      const avatar=document.createElement('img');avatar.src=owner.avatar;avatar.alt='';avatar.loading='lazy';
-      const details=document.createElement('div');const name=document.createElement('strong');name.textContent=owner.name;
+      const avatar=document.createElement('img');
+      const allowedAvatar=/^https:\/\/cdn\.discordapp\.com\/(?:avatars\/\d+\/[A-Za-z0-9_]+\.(?:png|gif)|embed\/avatars\/\d+)\.?(?:\?size=\d+)?$/.test(owner.avatar);
+      avatar.src=allowedAvatar?owner.avatar:'https://cdn.discordapp.com/embed/avatars/0.png';avatar.alt='';avatar.loading='lazy';avatar.referrerPolicy='no-referrer';
+      const details=document.createElement('div');const name=document.createElement('strong');name.textContent=owner.name.slice(0,80);
       const badge=document.createElement('small');badge.textContent='SERVER OWNER';details.append(name,badge);card.append(avatar,details);list.append(card);
     }
   }catch(error){document.querySelector('#owners-status')?.remove();list.replaceChildren();const message=document.createElement('div');message.className='owners-placeholder';message.textContent='تعذّر تحميل قائمة المالكين. تحقق من إعداد خدمة Discord.';list.append(message)}

@@ -250,7 +250,7 @@
         }
       }
       if (status) {
-        status.textContent = 'الأعضاء والمتصلون أعداد تقريبية من Discord وتُحدّث كل 5 دقائق؛ استخدامات الدعوة تتحدّث كل 15 دقيقة.';
+        status.textContent = 'الأعضاء والمتصلون أعداد تقريبية من Discord وتُحدّث كل 5 دقائق؛ قائمة OWNERS واستخدامات الدعوة تتحدّث كل 5 دقائق.';
       }
     } catch (error) {
       const m = $('#member-count');

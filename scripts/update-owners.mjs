@@ -12,17 +12,22 @@ async function discordJson(url, headers = {}) {
   return response.json();
 }
 
-const invite = await discordJson(
-  `https://discord.com/api/v10/invites/${inviteCode}?with_counts=true&with_metadata=true`,
+const invite = await discordJson(`https://discord.com/api/v10/invites/${inviteCode}`);
+const guildId = invite.guild?.id;
+if (!guildId) throw new Error('Could not resolve the Discord server from the invite.');
+
+const guildInvites = await discordJson(
+  `https://discord.com/api/v10/guilds/${guildId}/invites`,
   { Authorization: `Bot ${token}` }
 );
+const trackedInvite = Array.isArray(guildInvites)
+  ? guildInvites.find((item) => item.code === inviteCode)
+  : null;
 const inviteStatsPath = new URL('../invite-stats.json', import.meta.url);
-const inviteStats = `${JSON.stringify({ uses: Number.isInteger(invite.uses) ? invite.uses : null }, null, 2)}\n`;
+const inviteStats = `${JSON.stringify({ uses: Number.isInteger(trackedInvite?.uses) ? trackedInvite.uses : null }, null, 2)}\n`;
 let currentInviteStats = '';
 try { currentInviteStats = await readFile(inviteStatsPath, 'utf8'); } catch {}
 if (currentInviteStats !== inviteStats) await writeFile(inviteStatsPath, inviteStats, 'utf8');
-const guildId = invite.guild?.id;
-if (!guildId) throw new Error('Could not resolve the Discord server from the invite.');
 
 const owners = [];
 let after = '0';

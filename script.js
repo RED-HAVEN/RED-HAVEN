@@ -1,9 +1,36 @@
 (function () {
   'use strict';
 
-  /* ===== Mobile Menu ===== */
-  const menuToggle = document.querySelector('.menu-toggle');
-  const nav = document.querySelector('.nav');
+  /* ============================================================
+     HELPERS
+     ============================================================ */
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  const isMobile = () => window.matchMedia('(max-width: 900px)').matches;
+  const prefersReduced = () =>
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ============================================================
+     HEADER — scroll state
+     ============================================================ */
+  const header = $('#siteHeader');
+  let lastScroll = 0;
+
+  const onScroll = () => {
+    const y = window.scrollY;
+    if (header) {
+      header.classList.toggle('scrolled', y > 20);
+    }
+    lastScroll = y;
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ============================================================
+     MOBILE MENU
+     ============================================================ */
+  const menuToggle = $('.menu-toggle');
+  const nav = $('#primaryNav');
 
   if (menuToggle && nav) {
     menuToggle.addEventListener('click', () => {
@@ -12,133 +39,301 @@
       menuToggle.setAttribute('aria-label', open ? 'إغلاق القائمة' : 'فتح القائمة');
     });
 
-    nav.querySelectorAll('a').forEach((link) => {
+    $$('a', nav).forEach((link) => {
       link.addEventListener('click', () => {
         nav.classList.remove('open');
         menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'فتح القائمة');
       });
     });
   }
 
-  /* ===== Active Nav Link ===== */
-  const sections = [...document.querySelectorAll('main section[id]')];
-  const navLinks = [...document.querySelectorAll('.nav a')];
+  /* ============================================================
+     NAV INDICATOR (Desktop)
+     ============================================================ */
+  const navLinks = $$('.nav a');
+  const navIndicator = $('.nav-indicator');
+
+  const moveIndicator = (link) => {
+    if (!navIndicator || !link || isMobile()) return;
+    const rect = link.getBoundingClientRect();
+    const parentRect = nav.getBoundingClientRect();
+    // RTL: distance from right
+    const right = parentRect.right - rect.right;
+    navIndicator.style.width = `${rect.width}px`;
+    navIndicator.style.transform = `translateX(${-right}px)`;
+    navIndicator.classList.add('on');
+  };
+
+  const activeLink = () => navLinks.find((l) => l.classList.contains('active'));
+  requestAnimationFrame(() => moveIndicator(activeLink()));
+
+  /* ============================================================
+     ACTIVE NAV ON SCROLL
+     ============================================================ */
+  const sections = $$('main section[id]');
 
   if ('IntersectionObserver' in window && sections.length && navLinks.length) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            const id = `#${entry.target.id}`;
             navLinks.forEach((link) => {
-              link.classList.toggle('active', link.hash === `#${entry.target.id}`);
+              const match = link.hash === id;
+              link.classList.toggle('active', match);
+              if (match) moveIndicator(link);
             });
           }
         });
       },
-      { rootMargin: '-35% 0px -55% 0px' }
+      { rootMargin: '-40% 0px -50% 0px', threshold: 0 }
     );
-    sections.forEach((section) => observer.observe(section));
+    sections.forEach((s) => observer.observe(s));
   }
 
-  /* ===== Discord Stats ===== */
+  window.addEventListener('resize', () => {
+    requestAnimationFrame(() => moveIndicator(activeLink()));
+  });
+
+  /* ============================================================
+     REVEAL ON SCROLL
+     ============================================================ */
+  const revealEls = $$('.reveal');
+  revealEls.forEach((el) => {
+    const d = el.dataset.delay;
+    if (d) el.style.setProperty('--d', d);
+  });
+
+  if ('IntersectionObserver' in window && !prefersReduced()) {
+    const revealObs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            revealObs.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -10% 0px', threshold: 0.08 }
+    );
+    revealEls.forEach((el) => revealObs.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('in-view'));
+  }
+
+  /* ============================================================
+     MOUSE SPOTLIGHT (Desktop only)
+     ============================================================ */
+  if (!isMobile() && !prefersReduced() && window.matchMedia('(hover: hover)').matches) {
+    document.body.classList.add('has-mouse');
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let raf = null;
+
+    document.addEventListener(
+      'mousemove',
+      (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        if (!raf) {
+          raf = requestAnimationFrame(() => {
+            document.documentElement.style.setProperty('--mx', `${mx}px`);
+            document.documentElement.style.setProperty('--my', `${my}px`);
+            raf = null;
+          });
+        }
+      },
+      { passive: true }
+    );
+  }
+
+  /* ============================================================
+     3D TILT CARDS (Desktop only)
+     ============================================================ */
+  if (!isMobile() && !prefersReduced() && window.matchMedia('(hover: hover)').matches) {
+    const tiltCards = $$('.tilt');
+
+    tiltCards.forEach((card) => {
+      let raf = null;
+
+      const onMove = (e) => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const px = (e.clientX - rect.left) / rect.width - 0.5;
+          const py = (e.clientY - rect.top) / rect.height - 0.5;
+          const rx = py * -6;
+          const ry = px * 6;
+          card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-4px)`;
+          raf = null;
+        });
+      };
+
+      const onLeave = () => {
+        card.style.transform = '';
+      };
+
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseleave', onLeave);
+    });
+  }
+
+  /* ============================================================
+     DISCORD STATS
+     ============================================================ */
   const inviteCode = 'aGHnszRcfu';
-  const formatCount = (value) => new Intl.NumberFormat('ar').format(value);
+  const formatCount = (v) => new Intl.NumberFormat('ar').format(v);
+
+  const animateCount = (el, target) => {
+    if (!el || !Number.isFinite(target)) return;
+    if (prefersReduced()) {
+      el.textContent = formatCount(target);
+      return;
+    }
+    const duration = 1200;
+    const start = performance.now();
+    const from = 0;
+
+    const tick = (now) => {
+      const t = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      const value = Math.round(from + (target - from) * eased);
+      el.textContent = formatCount(value);
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = formatCount(target);
+    };
+    requestAnimationFrame(tick);
+  };
 
   async function refreshDiscordStats() {
-    const status = document.querySelector('#stats-status');
-    const memberEl = document.querySelector('#member-count');
-    const onlineEl = document.querySelector('#online-count');
-    const joinsEl = document.querySelector('#invite-joins');
-
-    if (!memberEl || !onlineEl || !joinsEl) return;
-
+    const status = $('#stats-status');
     try {
-      const response = await fetch(
+      const res = await fetch(
         `https://discord.com/api/v10/invites/${inviteCode}?with_counts=true`,
-        {
-          headers: { Accept: 'application/json' },
-          cache: 'no-store'
-        }
+        { headers: { Accept: 'application/json' }, cache: 'no-store' }
       );
+      if (!res.ok) throw new Error(`Discord API ${res.status}`);
 
-      if (!response.ok) throw new Error(`Discord API ${response.status}`);
-
-      const invite = await response.json();
+      const invite = await res.json();
       const members = invite.approximate_member_count;
       const online = invite.approximate_presence_count;
 
-      if (Number.isFinite(members)) memberEl.textContent = formatCount(members);
-      if (Number.isFinite(online)) onlineEl.textContent = formatCount(online);
-      joinsEl.textContent = Number.isFinite(invite.uses) ? formatCount(invite.uses) : 'غير متاح';
-      if (status) status.textContent = 'الأعضاء والمتصلون أعداد تقريبية من Discord وتُحدّث كل 5 دقائق.';
+      if (Number.isFinite(members)) {
+        const el = $('#member-count');
+        if (el && el.dataset.count !== String(members)) {
+          el.dataset.count = String(members);
+          animateCount(el, members);
+        }
+      }
+      if (Number.isFinite(online)) {
+        const el = $('#online-count');
+        if (el && el.dataset.count !== String(online)) {
+          el.dataset.count = String(online);
+          animateCount(el, online);
+        }
+      }
+      const joinsEl = $('#invite-joins');
+      if (joinsEl) {
+        joinsEl.textContent = Number.isFinite(invite.uses)
+          ? formatCount(invite.uses)
+          : 'غير متاح';
+      }
+      if (status) {
+        status.textContent = 'الأعضاء والمتصلون أعداد تقريبية من Discord وتُحدّث كل 5 دقائق.';
+      }
     } catch (error) {
-      memberEl.textContent = '—';
-      onlineEl.textContent = '—';
-      joinsEl.textContent = 'غير متاح';
-      if (status) status.textContent = 'تعذّر تحميل الإحصائيات الآن؛ رابط الانضمام يعمل بشكل طبيعي.';
+      const m = $('#member-count');
+      const o = $('#online-count');
+      const j = $('#invite-joins');
+      if (m) m.textContent = '—';
+      if (o) o.textContent = '—';
+      if (j) j.textContent = 'غير متاح';
+      if (status) {
+        status.textContent = 'تعذّر تحميل الإحصائيات الآن؛ رابط الانضمام يعمل بشكل طبيعي.';
+      }
     }
   }
 
   refreshDiscordStats();
   window.setInterval(refreshDiscordStats, 300000);
 
-  /* ===== Owners ===== */
+  /* ============================================================
+     LOAD OWNERS
+     ============================================================ */
   async function loadOwners() {
-    const list = document.querySelector('#owners-list');
+    const list = $('#owners-list');
     if (!list) return;
 
     try {
-      const response = await fetch(`./owners.json?v=${Date.now()}`, {
+      const res = await fetch(`./owners.json?v=${Date.now()}`, {
         headers: { Accept: 'application/json' },
-        cache: 'no-store'
+        cache: 'no-store',
       });
+      if (!res.ok) throw new Error(`Owners endpoint ${res.status}`);
 
-      if (!response.ok) throw new Error(`Owners endpoint ${response.status}`);
-
-      const data = await response.json();
+      const data = await res.json();
       const owners = Array.isArray(data.owners) ? data.owners : [];
 
       list.replaceChildren();
 
       if (!owners.length) {
-        const placeholder = document.createElement('div');
-        placeholder.className = 'owners-placeholder';
-        placeholder.textContent = 'لم يتم العثور على أعضاء بهذه الرتبة.';
-        list.append(placeholder);
+        const empty = document.createElement('div');
+        empty.className = 'owners-placeholder';
+        empty.textContent = 'لم يتم العثور على أعضاء بهذه الرتبة.';
+        list.append(empty);
         return;
       }
 
-      const fragment = document.createDocumentFragment();
-
+      const frag = document.createDocumentFragment();
       for (const owner of owners) {
         const card = document.createElement('article');
-        card.className = 'owner-card';
+        card.className = 'owner-card reveal';
 
         const avatar = document.createElement('img');
-        avatar.src = owner.avatar || '';
+        avatar.src = owner.avatar;
         avatar.alt = '';
         avatar.loading = 'lazy';
         avatar.width = 48;
         avatar.height = 48;
 
-        const details = document.createElement('div');
+        const info = document.createElement('div');
         const name = document.createElement('strong');
-        name.textContent = owner.name || 'Unknown';
-
+        name.textContent = owner.name;
         const badge = document.createElement('small');
         badge.textContent = 'SERVER OWNER';
 
-        details.append(name, badge);
-        card.append(avatar, details);
-        fragment.append(card);
+        info.append(name, badge);
+        card.append(avatar, info);
+        frag.append(card);
       }
+      list.append(frag);
 
-      list.append(fragment);
+      // reveal newly added cards
+      if ('IntersectionObserver' in window && !prefersReduced()) {
+        const obs = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        $$('.owner-card', list).forEach((c) => obs.observe(c));
+      } else {
+        $$('.owner-card', list).forEach((c) => c.classList.add('in-view'));
+      }
     } catch (error) {
+      const status = $('#owners-status');
+      status?.remove();
       list.replaceChildren();
       const message = document.createElement('div');
       message.className = 'owners-placeholder';
-      message.textContent = 'تعذّر تحميل قائمة المالكين. تحقق من إعداد خدمة Discord.';
+      message.textContent =
+        'تعذّر تحميل قائمة المالكين. تحقق من إعداد خدمة Discord.';
       list.append(message);
     }
   }

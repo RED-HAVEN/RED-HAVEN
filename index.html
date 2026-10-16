@@ -1,222 +1,401 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0a0709" />
-  <meta name="description" content="Red Haven — مجتمع ألعاب يجمع اللاعبين واللاعبات، جلسات لعب جماعية وفعاليات وهدايا Steam." />
-  <title>Red Haven — مجتمع اللاعبين</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#060406" />
+<meta name="description" content="Red Haven — مجتمع ألعاب يجمع اللاعبين واللاعبات، جلسات لعب جماعية وفعاليات وهدايا Steam." />
+<title>Red Haven — مجتمع اللاعبين</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="grain" aria-hidden="true"></div>
 
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="Red Haven الرئيسية">
-      <img src="red-haven-logo.webp" alt="شعار Red Haven" width="48" height="48" />
-      <span>RED <b>HAVEN</b></span>
+<!-- Animated ambient background -->
+<div class="ambient" aria-hidden="true">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="grid-overlay"></div>
+  <div class="noise"></div>
+</div>
+
+<!-- Mouse spotlight (desktop) -->
+<div class="spotlight" aria-hidden="true"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+  <a class="brand" href="#home" aria-label="Red Haven">
+    <span class="brand-logo">
+      <img src="red-haven-logo.webp" alt="" width="44" height="44" />
+      <span class="brand-pulse"></span>
+    </span>
+    <span class="brand-text">RED <b>HAVEN</b></span>
+  </a>
+
+  <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="primaryNav">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav class="nav" id="primaryNav" aria-label="القائمة الرئيسية">
+    <a href="#home" class="active">الرئيسية</a>
+    <a href="#community">المجتمع</a>
+    <a href="#owners">المالكون</a>
+    <a href="#games">الألعاب</a>
+    <a href="#giveaways">الهدايا</a>
+    <a href="#join">انضم إلينا</a>
+    <span class="nav-indicator" aria-hidden="true"></span>
+  </nav>
+
+  <a class="header-cta" href="#join">
+    <span>انضم الآن</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+    </svg>
+  </a>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="hero-glow" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="badge reveal" data-delay="0">
+        <span class="badge-dot"></span>
+        <span>مجتمع ألعاب • مفتوح للجميع</span>
+      </div>
+
+      <h1 class="reveal" data-delay="1">
+        <span class="line">مكانك بيننا</span>
+        <span class="line gradient-text">في Red Haven</span>
+      </h1>
+
+      <p class="hero-sub reveal" data-delay="2">
+        كوّن فريقك، اكتشف ألعاباً جديدة، وشارك لحظات الفوز والضحك.
+        مجتمع واحد يجمع اللاعبين واللاعبات من كل مكان.
+      </p>
+
+      <div class="hero-actions reveal" data-delay="3">
+        <a class="btn btn-primary" href="#join">
+          <span>انضم إلى الكوميونيتي</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+        <a class="btn btn-ghost" href="#games">
+          <span>اكتشف الألعاب</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="hero-meta reveal" data-delay="4">
+        <span class="pulse-dot"></span>
+        <span>الجميع مرحّب بهم</span>
+        <span class="meta-divider"></span>
+        <span>نلعبها سوا</span>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal" data-delay="2">
+      <div class="logo-stage">
+        <div class="ring ring-1" aria-hidden="true"></div>
+        <div class="ring ring-2" aria-hidden="true"></div>
+        <div class="ring ring-3" aria-hidden="true"></div>
+        <div class="logo-glow" aria-hidden="true"></div>
+        <img src="red-haven-logo.webp" alt="شعار Red Haven" width="380" height="380" />
+      </div>
+      <div class="logo-caption">
+        ONE COMMUNITY <span>·</span> ENDLESS ADVENTURES
+      </div>
+    </div>
+  </div>
+
+  <a class="scroll-hint" href="#stats" aria-label="مرّر للأسفل">
+    <span class="scroll-line"></span>
+    <span>اكتشف أكثر</span>
+  </a>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats-bar" id="stats" aria-label="إحصائيات السيرفر">
+  <div class="stats-grid">
+    <article class="stat reveal" data-delay="0">
+      <span class="stat-icon">♟</span>
+      <div>
+        <strong id="member-count" data-count="0">—</strong>
+        <small>عضو في السيرفر</small>
+      </div>
+    </article>
+    <article class="stat reveal" data-delay="1">
+      <span class="stat-icon live">●</span>
+      <div>
+        <strong id="online-count" data-count="0">—</strong>
+        <small>متصل الآن</small>
+      </div>
+    </article>
+    <article class="stat reveal" data-delay="2">
+      <span class="stat-icon">↗</span>
+      <div>
+        <strong id="invite-joins">جارٍ التحقق</strong>
+        <small>استخدامات الدعوة</small>
+      </div>
+    </article>
+  </div>
+  <p class="stats-caption" id="stats-status" aria-live="polite">إحصائيات تقريبية من Discord وتُحدّث تلقائياً.</p>
+</section>
+
+<!-- ============ COMMUNITY ============ -->
+<section class="community section" id="community">
+  <div class="section-head reveal">
+    <span class="eyebrow"><span class="eyebrow-line"></span> أكثر من مجرد سيرفر</span>
+    <h2>هنا تبدأ <span class="gradient-text">الحكاية</span></h2>
+    <p>سيرفرك للعب الجماعي، التعارف، والفعاليات الممتعة — أياً كانت لعبتك أو خبرتك.</p>
+  </div>
+
+  <div class="feature-grid">
+    <article class="feature-card tilt reveal" data-delay="0">
+      <div class="card-glow" aria-hidden="true"></div>
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <span class="card-index">01 / COMMUNITY</span>
+      <h3>كوميونيتي للجميع</h3>
+      <p>مساحة ودّية ومحترمة للاعبين واللاعبات. تعرّف على أشخاص يشاركونك نفس الشغف.</p>
+    </article>
+
+    <article class="feature-card tilt reveal" data-delay="1">
+      <div class="card-glow" aria-hidden="true"></div>
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+      </div>
+      <span class="card-index">02 / TEAM UP</span>
+      <h3>العب مع فريقك</h3>
+      <p>كوّن فريقاً، ابحث عن لاعبين لجولتك القادمة، واستمتعوا باللعب سوا.</p>
+    </article>
+
+    <article class="feature-card tilt reveal" data-delay="2">
+      <div class="card-glow" aria-hidden="true"></div>
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+        </svg>
+      </div>
+      <span class="card-index">03 / EVENTS</span>
+      <h3>فعاليات وهدايا</h3>
+      <p>تابع فعاليات المجتمع وسحوبات الهدايا، ومنها هدايا Steam وفق شروط كل فعالية.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ============ GAMES ============ -->
+<section class="games section" id="games">
+  <div class="section-head reveal">
+    <span class="eyebrow"><span class="eyebrow-line"></span> جهّز فريقك</span>
+    <h2>أي لعبة، <span class="gradient-text">نلعبها سوا</span></h2>
+    <p>من المنافسات الحماسية إلى جلسات اللعب الهادية — مكانك محفوظ.</p>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>VALORANT</span><span>·</span>
+      <span>FORTNITE</span><span>·</span>
+      <span>PUBG</span><span>·</span>
+      <span>MINECRAFT</span><span>·</span>
+      <span>RUST</span><span>·</span>
+      <span>APEX LEGENDS</span><span>·</span>
+      <span>GTA V</span><span>·</span>
+      <span>ROBLOX</span><span>·</span>
+      <span>AMONG US</span><span>·</span>
+      <span>VALORANT</span><span>·</span>
+      <span>FORTNITE</span><span>·</span>
+      <span>PUBG</span><span>·</span>
+      <span>MINECRAFT</span><span>·</span>
+      <span>RUST</span><span>·</span>
+      <span>APEX LEGENDS</span><span>·</span>
+      <span>GTA V</span><span>·</span>
+      <span>ROBLOX</span><span>·</span>
+      <span>AMONG US</span><span>·</span>
+    </div>
+  </div>
+
+  <div class="game-grid">
+    <article class="game-card tilt reveal" data-delay="0">
+      <div class="game-glow" aria-hidden="true"></div>
+      <span class="game-num">01</span>
+      <div class="game-body">
+        <span class="game-tag">تصويب وتنافس</span>
+        <h3>FPS & BATTLE ROYALE</h3>
+        <p>Valorant · Fortnite · PUBG · Call of Duty · Apex Legends</p>
+      </div>
+      <span class="game-arrow" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+        </svg>
+      </span>
+    </article>
+
+    <article class="game-card tilt reveal" data-delay="1">
+      <div class="game-glow" aria-hidden="true"></div>
+      <span class="game-num">02</span>
+      <div class="game-body">
+        <span class="game-tag">مغامرة وبقاء</span>
+        <h3>SURVIVAL & ADVENTURE</h3>
+        <p>Minecraft · Rust · Roblox · ARK · GTA V</p>
+      </div>
+      <span class="game-arrow" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+        </svg>
+      </span>
+    </article>
+
+    <article class="game-card tilt reveal" data-delay="2">
+      <div class="game-glow" aria-hidden="true"></div>
+      <span class="game-num">03</span>
+      <div class="game-body">
+        <span class="game-tag">جلسات وضحك</span>
+        <h3>PARTY & CO-OP</h3>
+        <p>Among Us · Lethal Company · Phasmophobia · Party games</p>
+      </div>
+      <span class="game-arrow" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+        </svg>
+      </span>
+    </article>
+
+    <article class="game-card tilt reveal" data-delay="3">
+      <div class="game-glow" aria-hidden="true"></div>
+      <span class="game-num">04</span>
+      <div class="game-body">
+        <span class="game-tag">وغيرها كثير</span>
+        <h3>YOUR GAME, YOUR CREW</h3>
+        <p>اقترح لعبتك وابحث عن لاعبين يشاركونك الحماس.</p>
+      </div>
+      <span class="game-arrow" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/>
+        </svg>
+      </span>
+    </article>
+  </div>
+</section>
+
+<!-- ============ GIVEAWAY ============ -->
+<section class="giveaway section" id="giveaways">
+  <div class="giveaway-visual reveal">
+    <div class="gift-stage">
+      <div class="gift-ring ring-a" aria-hidden="true"></div>
+      <div class="gift-ring ring-b" aria-hidden="true"></div>
+      <div class="gift-ring ring-c" aria-hidden="true"></div>
+      <div class="gift-emoji" aria-hidden="true">🎁</div>
+      <span class="spark s1" aria-hidden="true">✦</span>
+      <span class="spark s2" aria-hidden="true">✧</span>
+      <span class="spark s3" aria-hidden="true">✦</span>
+    </div>
+  </div>
+
+  <div class="giveaway-copy reveal" data-delay="1">
+    <span class="eyebrow"><span class="eyebrow-line"></span> مفاجآت المجتمع</span>
+    <h2>هدايا <span class="gradient-text">Steam</span><br />في الفعاليات</h2>
+    <p>نقيم سحوبات وفعاليات مجتمعية تتضمن هدايا Steam. تابع إعلانات السيرفر لمعرفة الجوائز المتاحة وشروط المشاركة وموعد كل فعالية.</p>
+
+    <div class="note">
+      <span class="note-icon" aria-hidden="true">✦</span>
+      <span>الهدايا تُعلن عند توفرها. لا نطلب كلمة مرور Steam أو بيانات الدفع للمشاركة.</span>
+    </div>
+
+    <a class="btn btn-primary" href="#join">
+      <span>تابع الفعاليات</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+      </svg>
     </a>
-    <button class="menu-toggle" aria-label="فتح القائمة" aria-expanded="false">
-      <i></i><i></i><i></i>
-    </button>
-    <nav class="nav" aria-label="القائمة الرئيسية">
-      <a href="#home" class="active">الرئيسية</a>
-      <a href="#community">المجتمع</a>
-      <a href="#owners">المالكون</a>
-      <a href="#games">الألعاب</a>
-      <a href="#giveaways">الهدايا</a>
-      <a href="#join">انضم إلينا</a>
-    </nav>
-    <a class="header-join" href="#join">
-      <span>انضم للسيرفر</span><b>↙</b>
-    </a>
-  </header>
+  </div>
+</section>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero" id="home">
-      <div class="hero-bg" aria-hidden="true"></div>
-      <div class="hero-content">
-        <div class="live-label"><span></span> مجتمع ألعاب • مفتوح للجميع</div>
-        <h1>مكانك بيننا<br /><em>في <span>Red Haven</span></em></h1>
-        <p>كوّن فريقك، اكتشف ألعاباً جديدة، وشارك لحظات الفوز والضحك. مجتمع واحد يجمع اللاعبين واللاعبات من كل مكان.</p>
-        <div class="hero-actions">
-          <a class="button button-red" href="#join">انضم إلى الكوميونيتي <b>←</b></a>
-          <a class="button button-outline" href="#games">اكتشف الألعاب <b>⌄</b></a>
-        </div>
-        <div class="hero-meta">
-          <span class="pulse"></span><span>الجميع مرحّب بهم</span><i></i><span>نلعبها سوا</span>
-        </div>
-      </div>
-      <div class="hero-emblem">
-        <div class="emblem-halo" aria-hidden="true"></div>
-        <img src="red-haven-logo.webp" alt="Red Haven — مجتمع الألعاب" width="420" height="420" loading="eager" />
-        <div class="emblem-tag">ONE COMMUNITY <span>·</span> ENDLESS ADVENTURES</div>
-      </div>
-      <a class="scroll-cue" href="#community">مرّر لاكتشاف المجتمع <b>↓</b></a>
-    </section>
+<!-- ============ OWNERS ============ -->
+<section class="owners section" id="owners">
+  <div class="section-head reveal">
+    <span class="eyebrow"><span class="eyebrow-line"></span> فريق الإدارة</span>
+    <h2>أصحاب <span class="gradient-text">Red Haven</span></h2>
+    <p>أعضاء السيرفر الحاملون لرتبة OWNERS.</p>
+  </div>
 
-    <!-- إحصائيات السيرفر -->
-    <section class="server-stats" aria-label="إحصائيات السيرفر">
-      <article class="server-stat">
-        <span class="stat-symbol" aria-hidden="true">♟</span>
-        <div><strong id="member-count">—</strong><small>عضو في السيرفر</small></div>
-      </article>
-      <article class="server-stat">
-        <span class="stat-symbol" aria-hidden="true">●</span>
-        <div><strong id="online-count">—</strong><small>متصل الآن</small></div>
-      </article>
-      <article class="server-stat invite-stat">
-        <span class="stat-symbol" aria-hidden="true">↗</span>
-        <div><strong id="invite-joins">جارٍ التحقق</strong><small>استخدامات رابط الدعوة</small></div>
-        <span class="stat-hint" title="يعرض العدد إذا أتاحه Discord للدعوة.">ⓘ</span>
-      </article>
-      <p class="stats-caption" id="stats-status" aria-live="polite">إحصائيات تقريبية من Discord وتتحدث تلقائياً.</p>
-    </section>
+  <div class="owners-grid" id="owners-list" aria-live="polite">
+    <div class="owners-placeholder" id="owners-status">
+      <span class="loader-dot"></span>
+      سيظهر المالكون هنا بعد ربط خدمة Discord الآمنة.
+    </div>
+  </div>
 
-    <!-- المالكون -->
-    <section class="owners section" id="owners">
-      <div class="section-title">
-        <span class="eyebrow">فريق الإدارة</span>
-        <h2>أصحاب <span>Red Haven</span></h2>
-        <p>أعضاء السيرفر الحاملون لرتبة OWNERS.</p>
-      </div>
-      <div class="owners-grid" id="owners-list" aria-live="polite">
-        <div class="owners-placeholder" id="owners-status">سيظهر المالكون هنا بعد ربط خدمة Discord الآمنة.</div>
-      </div>
-      <p class="owners-note">الأسماء والصور المعروضة مأخوذة من ملفات Discord العامة للأعضاء ضمن هذه الرتبة.</p>
-    </section>
+  <p class="owners-note">الأسماء والصور المعروضة مأخوذة من ملفات Discord العامة للأعضاء ضمن هذه الرتبة.</p>
+</section>
 
-    <!-- المجتمع -->
-    <section class="intro section" id="community">
-      <div class="section-title">
-        <span class="eyebrow">أكثر من مجرد سيرفر</span>
-        <h2>هنا تبدأ <span>الحكاية</span></h2>
-        <p>سيرفرك للعب الجماعي، التعارف، والفعاليات الممتعة — أياً كانت لعبتك أو خبرتك.</p>
-      </div>
-      <div class="feature-grid">
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">♧</div>
-          <span class="card-index">01 / COMMUNITY</span>
-          <h3>كوميونيتي للجميع</h3>
-          <p>مساحة ودّية ومحترمة للاعبين واللاعبات. تعرّف على أشخاص يشاركونك نفس الشغف.</p>
-          <div class="card-mark" aria-hidden="true">RH</div>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">⌁</div>
-          <span class="card-index">02 / TEAM UP</span>
-          <h3>العب مع فريقك</h3>
-          <p>كوّن فريقاً، ابحث عن لاعبين لجولتك القادمة، واستمتعوا باللعب سوا.</p>
-          <div class="card-mark" aria-hidden="true">RH</div>
-        </article>
-        <article class="feature-card">
-          <div class="feature-icon" aria-hidden="true">✦</div>
-          <span class="card-index">03 / EVENTS</span>
-          <h3>فعاليات وهدايا</h3>
-          <p>تابع فعاليات المجتمع وسحوبات الهدايا، ومنها هدايا Steam وفق شروط كل فعالية.</p>
-          <div class="card-mark" aria-hidden="true">RH</div>
-        </article>
-      </div>
-    </section>
+<!-- ============ JOIN ============ -->
+<section class="join section" id="join">
+  <div class="join-panel reveal">
+    <div class="join-glow" aria-hidden="true"></div>
 
-    <!-- الألعاب -->
-    <section class="games section" id="games">
-      <div class="section-title">
-        <span class="eyebrow">جهّز فريقك</span>
-        <h2>أي لعبة، <span>نلعبها سوا</span></h2>
-        <p>من المنافسات الحماسية إلى جلسات اللعب الهادية — مكانك محفوظ.</p>
-      </div>
-      <div class="game-grid">
-        <article class="game-card">
-          <div class="game-number">01</div>
-          <div class="game-info">
-            <span>تصويب وتنافس</span>
-            <h3>FPS &amp; BATTLE ROYALE</h3>
-            <p>Valorant · Fortnite · PUBG · Call of Duty · Apex Legends</p>
-          </div>
-          <span class="game-arrow" aria-hidden="true">↙</span>
-        </article>
-        <article class="game-card">
-          <div class="game-number">02</div>
-          <div class="game-info">
-            <span>مغامرة وبقاء</span>
-            <h3>SURVIVAL &amp; ADVENTURE</h3>
-            <p>Minecraft · Rust · Roblox · ARK · GTA V</p>
-          </div>
-          <span class="game-arrow" aria-hidden="true">↙</span>
-        </article>
-        <article class="game-card">
-          <div class="game-number">03</div>
-          <div class="game-info">
-            <span>جلسات وضحك</span>
-            <h3>PARTY &amp; CO-OP</h3>
-            <p>Among Us · Lethal Company · Phasmophobia · Party games</p>
-          </div>
-          <span class="game-arrow" aria-hidden="true">↙</span>
-        </article>
-        <article class="game-card">
-          <div class="game-number">04</div>
-          <div class="game-info">
-            <span>وغيرها كثير</span>
-            <h3>YOUR GAME, YOUR CREW</h3>
-            <p>اقترح لعبتك وابحث عن لاعبين يشاركونك الحماس.</p>
-          </div>
-          <span class="game-arrow" aria-hidden="true">↙</span>
-        </article>
-      </div>
-    </section>
+    <div class="join-copy">
+      <span class="eyebrow"><span class="eyebrow-line"></span> مكانك جاهز</span>
+      <h2>نقصنا <span class="gradient-text">أنت!</span></h2>
+      <p>سواء كنت تلعب يومياً أو تبحث عن ناس تلعب معهم من وقت لآخر، حياك في Red Haven.</p>
 
-    <!-- الهدايا -->
-    <section class="giveaway section" id="giveaways">
-      <div class="giveaway-art">
-        <div class="gift-orbit orbit-one" aria-hidden="true"></div>
-        <div class="gift-orbit orbit-two" aria-hidden="true"></div>
-        <div class="gift-box" aria-hidden="true">🎁</div>
-        <span class="spark spark-one" aria-hidden="true">✦</span>
-        <span class="spark spark-two" aria-hidden="true">✧</span>
-      </div>
-      <div class="giveaway-copy">
-        <span class="eyebrow">مفاجآت المجتمع</span>
-        <h2>هدايا <span>Steam</span><br />في الفعاليات</h2>
-        <p>نقيم سحوبات وفعاليات مجتمعية تتضمن هدايا Steam. تابع إعلانات السيرفر لمعرفة الجوائز المتاحة وشروط المشاركة وموعد كل فعالية.</p>
-        <div class="honest-note">
-          <b aria-hidden="true">✦</b>
-          <span>الهدايا تُعلن عند توفرها. لا نطلب كلمة مرور Steam أو بيانات الدفع للمشاركة.</span>
-        </div>
-        <a class="button button-red" href="#join">تابع الفعاليات <b>↗</b></a>
-      </div>
-    </section>
+      <a class="btn btn-primary btn-lg" href="https://discord.gg/aGHnszRcfu" target="_blank" rel="noreferrer">
+        <span>انضم إلى سيرفر Discord</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M7 17L17 7"/><path d="M7 7h10v10"/>
+        </svg>
+      </a>
+    </div>
 
-    <!-- الانضمام -->
-    <section class="join section" id="join">
-      <div class="join-panel">
-        <div class="join-top">
-          <span class="eyebrow">مكانك جاهز</span>
-          <h2>نقصنا <span>أنت!</span></h2>
-          <p>سواء كنت تلعب يومياً أو تبحث عن ناس تلعب معهم من وقت لآخر، حياك في Red Haven.</p>
-          <a class="button button-red button-large" href="https://discord.gg/aGHnszRcfu" target="_blank" rel="noreferrer">انضم إلى سيرفر Discord <b>↗</b></a>
-        </div>
-        <div class="join-steps">
-          <div><b>01</b><span><strong>ادخل السيرفر</strong><small>انضم عبر رابط Discord.</small></span></div>
-          <div><b>02</b><span><strong>عرّفنا عليك</strong><small>اختر ألعابك وقنواتك المفضلة.</small></span></div>
-          <div><b>03</b><span><strong>ابدأ اللعب</strong><small>كوّن فريقك وشارك الفعاليات.</small></span></div>
-        </div>
+    <div class="join-steps">
+      <div class="step">
+        <b>01</b>
+        <span><strong>ادخل السيرفر</strong><small>انضم عبر رابط Discord.</small></span>
       </div>
-    </section>
-  </main>
+      <div class="step">
+        <b>02</b>
+        <span><strong>عرّفنا عليك</strong><small>اختر ألعابك وقنواتك المفضلة.</small></span>
+      </div>
+      <div class="step">
+        <b>03</b>
+        <span><strong>ابدأ اللعب</strong><small>كوّن فريقك وشارك الفعاليات.</small></span>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <footer>
-    <a class="brand footer-brand" href="#home">
-      <img src="red-haven-logo.webp" alt="" width="36" height="36" loading="lazy" />
-      <span>RED <b>HAVEN</b></span>
-    </a>
-    <p>مجتمع واحد، مغامرات لا تنتهي <span>© 2026 RED HAVEN</span></p>
-    <a href="#home" class="back-top" aria-label="العودة للأعلى">↑</a>
-  </footer>
+</main>
 
-  <script src="script.js"></script>
+<!-- ============ FOOTER ============ -->
+<footer>
+  <a class="brand footer-brand" href="#home">
+    <span class="brand-logo">
+      <img src="red-haven-logo.webp" alt="" width="34" height="34" />
+    </span>
+    <span class="brand-text">RED <b>HAVEN</b></span>
+  </a>
+  <p>مجتمع واحد، مغامرات لا تنتهي <span>© 2026 RED HAVEN</span></p>
+  <a href="#home" class="back-top" aria-label="العودة للأعلى">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5"/><path d="M5 12l7-7 7 7"/>
+    </svg>
+  </a>
+</footer>
+
+<script src="script.js" defer></script>
 </body>
 </html>

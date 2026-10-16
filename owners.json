@@ -1,34 +1,3 @@
 {
-  "owners": [
-    {
-      "id": "1545508598879101030",
-      "name": "✦ 2PAC ✦",
-      "avatar": "https://cdn.discordapp.com/avatars/1545508598879101030/9ab80b9cdcf5108a359dbb1bea652548.png?size=128"
-    },
-    {
-      "id": "1349779520055541802",
-      "name": "𝑯𝑨𝑩𝑰𝑩",
-      "avatar": "https://cdn.discordapp.com/avatars/1349779520055541802/d0cc117c67fa9c0c543c0385a092a09c.png?size=128"
-    },
-    {
-      "id": "317801204639858689",
-      "name": "𝐉𝐬ᴿ͢͢͢ᴾ_الــــــــحــــــــاج",
-      "avatar": "https://cdn.discordapp.com/avatars/317801204639858689/eb6ff15195a6472dda4bfa975a71876b.png?size=128"
-    },
-    {
-      "id": "1173753119646158871",
-      "name": "LAKHDAR_213",
-      "avatar": "https://cdn.discordapp.com/avatars/1173753119646158871/b199c248e8ddccdc9d2730533ee81123.png?size=128"
-    },
-    {
-      "id": "1210739816405274726",
-      "name": "𝑴𝒐𝒉𝒂",
-      "avatar": "https://cdn.discordapp.com/avatars/1210739816405274726/4622a145e9be658ece9d932894737933.png?size=128"
-    },
-    {
-      "id": "1391763259232616500",
-      "name": "𝑅𝒾𝓂𝒶𝓈",
-      "avatar": "https://cdn.discordapp.com/avatars/1391763259232616500/40abdf0885e06b5a74ed4c297f249084.png?size=128"
-    }
-  ]
+  "owners": []
 }

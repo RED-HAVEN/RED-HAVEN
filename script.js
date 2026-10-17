@@ -269,6 +269,109 @@
   window.setInterval(refreshDiscordStats, 300000);
 
   /* ============================================================
+     LIVE DISCORD MEMBERS
+     ============================================================ */
+  const guildWidgetUrl = 'https://discord.com/api/guilds/1547011095099871262/widget.json';
+  const presenceLabels = { online: 'متصل', idle: 'خامل', dnd: 'مشغول' };
+
+  async function refreshOnlineMembers() {
+    const list = $('#online-members-list');
+    const count = $('#online-roster-count');
+    const status = $('#online-roster-status');
+    if (!list || !count) return;
+
+    list.setAttribute('aria-busy', 'true');
+    try {
+      const res = await fetch(`${guildWidgetUrl}?v=${Date.now()}`, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store',
+      });
+      if (!res.ok) throw new Error(`Discord widget API ${res.status}`);
+
+      const widget = await res.json();
+      const members = Array.isArray(widget.members) ? widget.members : [];
+      const online = Number.isFinite(widget.presence_count)
+        ? widget.presence_count
+        : members.length;
+
+      count.textContent = formatCount(online);
+      list.replaceChildren();
+
+      if (!members.length) {
+        const empty = document.createElement('div');
+        empty.className = 'owners-placeholder';
+        empty.textContent = online
+          ? 'لا يعرض Discord أسماء المتصلين حالياً.'
+          : 'لا يوجد أعضاء متصلون حالياً.';
+        list.append(empty);
+      }
+
+      const fragment = document.createDocumentFragment();
+      for (const member of members) {
+        if (typeof member.username !== 'string') continue;
+
+        const card = document.createElement('article');
+        card.className = 'online-card';
+
+        const avatar = document.createElement('img');
+        avatar.className = 'online-avatar';
+        avatar.alt = `صورة ${member.username}`;
+        avatar.loading = 'lazy';
+        avatar.width = 48;
+        avatar.height = 48;
+        avatar.referrerPolicy = 'no-referrer';
+
+        let avatarUrl = 'https://cdn.discordapp.com/embed/avatars/0.png';
+        try {
+          const candidate = new URL(member.avatar_url);
+          if (
+            candidate.protocol === 'https:' &&
+            candidate.hostname === 'cdn.discordapp.com' &&
+            candidate.pathname.startsWith('/widget-avatars/')
+          ) avatarUrl = candidate.href;
+        } catch {}
+        avatar.src = avatarUrl;
+
+        const info = document.createElement('div');
+        info.className = 'online-info';
+        const name = document.createElement('strong');
+        name.textContent = member.username.slice(0, 80);
+        const presence = document.createElement('small');
+        presence.textContent = presenceLabels[member.status] || 'متصل';
+        info.append(name, presence);
+
+        const statusClass = ['online', 'idle', 'dnd'].includes(member.status)
+          ? member.status
+          : 'online';
+        const dot = document.createElement('span');
+        dot.className = `online-status-dot status-${statusClass}`;
+        dot.setAttribute('aria-hidden', 'true');
+
+        card.append(avatar, info, dot);
+        fragment.append(card);
+      }
+      list.append(fragment);
+
+      if (status) {
+        status.textContent = 'تتحدث القائمة تلقائياً كل 5 دقائق. قد يعرض Discord حتى 100 عضو في الأداة.';
+      }
+    } catch {
+      count.textContent = 'غير متاح';
+      list.replaceChildren();
+      const message = document.createElement('div');
+      message.className = 'owners-placeholder';
+      message.textContent = 'تعذّر تحميل قائمة المتصلين. تأكد من تفعيل أداة السيرفر في Discord.';
+      list.append(message);
+      if (status) status.textContent = 'أعد تحميل الصفحة بعد حفظ إعدادات أداة السيرفر.';
+    } finally {
+      list.setAttribute('aria-busy', 'false');
+    }
+  }
+
+  refreshOnlineMembers();
+  window.setInterval(refreshOnlineMembers, 300000);
+
+  /* ============================================================
      LOAD OWNERS
      ============================================================ */
   async function loadOwners() {

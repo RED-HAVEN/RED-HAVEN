@@ -290,14 +290,21 @@
 
       const widget = await res.json();
       const members = Array.isArray(widget.members) ? widget.members : [];
-      const online = Number.isFinite(widget.presence_count)
-        ? widget.presence_count
-        : members.length;
+      const knownBotNames = /(?:yagpdb(?:\\.xyz)?|tempvoice|wicks(?:\\.bot)?|securitybot(?:\\.gg)?)/i;
+      const botActivity = /^\\s*\\//;
+      const visibleMembers = members.filter((member) => {
+        const activity = typeof member.game?.name === 'string' ? member.game.name : '';
+        return member.bot !== true &&
+          member.is_bot !== true &&
+          !knownBotNames.test(member.username || '') &&
+          !knownBotNames.test(activity) &&
+          !botActivity.test(activity);
+      });
 
-      count.textContent = formatCount(online);
+      count.textContent = formatCount(visibleMembers.length);
       list.replaceChildren();
 
-      if (!members.length) {
+      if (!visibleMembers.length) {
         const empty = document.createElement('div');
         empty.className = 'owners-placeholder';
         empty.textContent = online
@@ -307,7 +314,7 @@
       }
 
       const fragment = document.createDocumentFragment();
-      for (const member of members) {
+      for (const member of visibleMembers) {
         if (typeof member.username !== 'string') continue;
 
         const card = document.createElement('article');

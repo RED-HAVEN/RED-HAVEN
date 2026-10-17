@@ -290,7 +290,7 @@
 
       const widget = await res.json();
       const members = Array.isArray(widget.members) ? widget.members : [];
-      const knownBotNames = /(?:yagpdb(?:\.xyz)?|tempvoice|wicks(?:\.bot)?|securitybot(?:\.gg)?)/i;
+      const knownBotNames = /(?:yagpdb(?:\.xyz)?|tempvoice|wicks(?:\.bot)?|securitybot(?:\.gg)?|red\s*community)/i;
       const botActivity = /^\s*\//;
       const visibleMembers = members.filter((member) => {
         const activity = typeof member.game?.name === 'string' ? member.game.name : '';

@@ -182,7 +182,7 @@
   /* ============================================================
      DISCORD STATS
      ============================================================ */
-  const inviteCode = 'aGHnszRcfu';
+  const inviteCode = 'cMhkJ6TgUG';
   const formatCount = (v) => new Intl.NumberFormat('ar').format(v);
 
   const animateCount = (el, target) => {

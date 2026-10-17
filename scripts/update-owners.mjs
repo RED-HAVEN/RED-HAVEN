@@ -1,6 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 
-const inviteCode = 'aGHnszRcfu';
+const inviteCode = 'cMhkJ6TgUG';
 const roleId = '1547031412547260427';
 const highStaffRoleId = '1547617967267905616';
 const boosterRoleId = '1551063352267112649';

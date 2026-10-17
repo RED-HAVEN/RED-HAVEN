@@ -290,25 +290,25 @@
 
       const widget = await res.json();
       const members = Array.isArray(widget.members) ? widget.members : [];
-      const knownBotNames = /(?:yagpdb(?:\\.xyz)?|tempvoice|wicks(?:\\.bot)?|securitybot(?:\\.gg)?)/i;
-      const botActivity = /^\\s*\\//;
+      const knownBotNames = /(?:yagpdb(?:\.xyz)?|tempvoice|wicks(?:\.bot)?|securitybot(?:\.gg)?)/i;
+      const botActivity = /^\s*\//;
       const visibleMembers = members.filter((member) => {
         const activity = typeof member.game?.name === 'string' ? member.game.name : '';
-        return member.bot !== true &&
+        return typeof member.username === 'string' &&
+          member.bot !== true &&
           member.is_bot !== true &&
-          !knownBotNames.test(member.username || '') &&
+          !knownBotNames.test(member.username) &&
           !knownBotNames.test(activity) &&
           !botActivity.test(activity);
       });
-
       count.textContent = formatCount(visibleMembers.length);
       list.replaceChildren();
 
       if (!visibleMembers.length) {
         const empty = document.createElement('div');
         empty.className = 'owners-placeholder';
-        empty.textContent = online
-          ? 'لا يعرض Discord أسماء المتصلين حالياً.'
+        empty.textContent = members.length
+          ? 'لا يوجد أعضاء عاديون متصلون حالياً.'
           : 'لا يوجد أعضاء متصلون حالياً.';
         list.append(empty);
       }

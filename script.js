@@ -294,10 +294,15 @@
       const botActivity = /^\s*\//;
       const visibleMembers = members.filter((member) => {
         const activity = typeof member.game?.name === 'string' ? member.game.name : '';
-        return typeof member.username === 'string' &&
+        const username = typeof member.username === 'string'
+          ? member.username.normalize('NFKC')
+          : '';
+        const normalizedName = username.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return username &&
           member.bot !== true &&
           member.is_bot !== true &&
-          !knownBotNames.test(member.username) &&
+          normalizedName !== 'redcommunity' &&
+          !knownBotNames.test(username) &&
           !knownBotNames.test(activity) &&
           !botActivity.test(activity);
       });

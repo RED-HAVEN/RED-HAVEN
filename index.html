@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Tajawal:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="style.css?v=highstaff3" />
+<link rel="stylesheet" href="style.css?v=online-roster1" />
 </head>
 <body>
 
@@ -149,6 +149,24 @@
     </article>
   </div>
   <p class="stats-caption" id="stats-status" aria-live="polite">إحصائيات تقريبية من Discord وتُحدّث تلقائياً.</p>
+</section>
+
+<!-- ============ ONLINE MEMBERS ============ -->
+<section class="online-members section" id="online-members" aria-labelledby="online-title">
+  <div class="section-head reveal">
+    <span class="eyebrow"><span class="eyebrow-line"></span> مجتمع Red Haven الآن</span>
+    <h2 id="online-title">المتصلون <span class="gradient-text">الآن</span></h2>
+    <p>تعرّف على الأعضاء المتصلين في السيرفر وصورهم وحالاتهم الظاهرة في Discord.</p>
+  </div>
+  <div class="online-summary reveal" aria-live="polite">
+    <span class="online-live-dot" aria-hidden="true"></span>
+    <strong id="online-roster-count">—</strong>
+    <span>متصل الآن</span>
+  </div>
+  <div class="online-grid" id="online-members-list" aria-live="polite" aria-busy="true">
+    <div class="owners-placeholder"><span class="loader-dot"></span>جارٍ تحميل قائمة المتصلين.</div>
+  </div>
+  <p class="owners-note" id="online-roster-status" aria-live="polite">تتحدث القائمة تلقائياً كل 5 دقائق. قد يعرض Discord حتى 100 عضو في الأداة.</p>
 </section>
 
 <!-- ============ COMMUNITY ============ -->
@@ -453,6 +471,6 @@
   </a>
 </footer>
 
-<script src="script.js?v=highstaff3" defer></script>
+<script src="script.js?v=online-roster1" defer></script>
 </body>
 </html>

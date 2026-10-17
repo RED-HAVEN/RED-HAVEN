@@ -506,4 +506,47 @@
   }
 
   loadBoosters();
+
+  /* ============================================================
+     CONSENT-BASED VISIT LOG
+     ============================================================ */
+  const visitLogEndpoint = '';
+  const visitConsent = $('#visitConsent');
+  const visitConsentAccept = $('#visitConsentAccept');
+  const visitConsentDecline = $('#visitConsentDecline');
+
+  async function logVisit() {
+    if (!visitLogEndpoint) return;
+    try {
+      await fetch(visitLogEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page: window.location.pathname }),
+        mode: 'cors',
+        keepalive: true,
+      });
+    } catch {
+      // A failed optional log must not affect the site.
+    }
+  }
+
+  if (visitConsent && visitConsentAccept && visitConsentDecline && visitLogEndpoint) {
+    let savedConsent = null;
+    try { savedConsent = localStorage.getItem('redHavenVisitLogConsent'); } catch {}
+    if (savedConsent === 'yes') {
+      logVisit();
+    } else if (savedConsent !== 'no') {
+      visitConsent.hidden = false;
+    }
+    visitConsentAccept.addEventListener('click', () => {
+      try { localStorage.setItem('redHavenVisitLogConsent', 'yes'); } catch {}
+      visitConsent.hidden = true;
+      logVisit();
+    });
+    visitConsentDecline.addEventListener('click', () => {
+      try { localStorage.setItem('redHavenVisitLogConsent', 'no'); } catch {}
+      visitConsent.hidden = true;
+    });
+  }
+
 })();

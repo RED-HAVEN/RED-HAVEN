@@ -4,7 +4,7 @@
 
 const cors = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
   'Access-Control-Max-Age': '86400',
 };
@@ -34,8 +34,83 @@ function avatarUrl(user) {
   return `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.${ext}?size=128`;
 }
 
+
+const VISIT_CHANNEL_ID = '1560703962766909551';
+const SITE_ORIGIN = 'https://red-haven.github.io';
+
+async function logVisit(request, env) {
+  if (request.headers.get('Origin') !== SITE_ORIGIN) {
+    return json({ error: 'origin_not_allowed' }, 403);
+  }
+  if (!env.DISCORD_BOT_TOKEN) {
+    return json({ error: 'worker_not_configured' }, 503);
+  }
+  if (!request.headers.get('Content-Type')?.toLowerCase().startsWith('application/json')) {
+    return json({ error: 'unsupported_media_type' }, 415);
+  }
+
+  let payload;
+  try {
+    payload = await request.json();
+  } catch {
+    return json({ error: 'invalid_json' }, 400);
+  }
+
+  const page = typeof payload?.page === 'string' && /^\/[a-zA-Z0-9/_-]{0,100}$/.test(payload.page)
+    ? payload.page
+    : '/';
+  const countryCode = request.cf?.country || request.headers.get('CF-IPCountry') || 'XX';
+  const countryNames = {
+    US: 'الولايات المتحدة', GB: 'المملكة المتحدة', SA: 'السعودية', EG: 'مصر',
+    DZ: 'الجزائر', MA: 'المغرب', TN: 'تونس', AE: 'الإمارات', QA: 'قطر',
+    KW: 'الكويت', BH: 'البحرين', OM: 'عُمان', JO: 'الأردن', IQ: 'العراق',
+    TR: 'تركيا', FR: 'فرنسا', DE: 'ألمانيا', ES: 'إسبانيا', IT: 'إيطاليا',
+    CA: 'كندا', AU: 'أستراليا', IN: 'الهند', PK: 'باكستان', ID: 'إندونيسيا',
+  };
+  const country = countryNames[countryCode] || (countryCode === 'XX' ? 'غير معروف' : countryCode);
+
+  // Throttle repeat visits without sending or storing the raw IP in Discord.
+  const ip = request.headers.get('CF-Connecting-IP');
+  if (ip) {
+    const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+    const hash = Array.from(new Uint8Array(digest)).slice(0, 16).map((byte) => byte.toString(16).padStart(2, '0')).join('');
+    const cacheKey = new Request(`https://visit-rate-limit.invalid/${hash}`);
+    const cache = caches.default;
+    if (await cache.match(cacheKey)) return json({ ok: true }, 202);
+    await cache.put(cacheKey, new Response('limited', {
+      headers: { 'Cache-Control': 'public, max-age=900' },
+    }));
+  }
+
+  const embed = {
+    title: 'زيارة جديدة للموقع',
+    color: 0xB50920,
+    fields: [
+      { name: 'البلد', value: country, inline: true },
+      { name: 'الاسم', value: 'غير متاح تلقائيًا', inline: true },
+      { name: 'الصفحة', value: page, inline: false },
+    ],
+    timestamp: new Date().toISOString(),
+    footer: { text: 'Red Haven • زيارة بموافقة الزائر' },
+  };
+  const response = await fetch(`https://discord.com/api/v10/channels/${VISIT_CHANNEL_ID}/messages`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bot ${env.DISCORD_BOT_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ embeds: [embed] }),
+  });
+  if (!response.ok) return json({ error: 'discord_send_failed' }, 502);
+  return json({ ok: true }, 202);
+}
+
 export default {
   async fetch(request, env, ctx) {
+    const pathname = new URL(request.url).pathname;
+    if (request.method === 'POST' && pathname.endsWith('/visit')) {
+      return logVisit(request, env);
+    }
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers: cors });
     }
